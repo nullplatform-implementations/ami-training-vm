@@ -8,6 +8,8 @@ EC2 instances pre-configured with training tools, one per student.
 - kubectl
 - OpenTofu
 - gotemplate
+- Docker
+- Claude Code CLI
 - Nullplatform CLI
 
 ## Requirements
