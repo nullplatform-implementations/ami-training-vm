@@ -28,6 +28,20 @@ find /tmp/gotemplate -name "gotemplate" -type f -exec mv {} /usr/local/bin/gotem
 chmod +x /usr/local/bin/gotemplate
 rm -rf /tmp/gotemplate /tmp/gotemplate.zip
 
+# Docker
+apt-get install -y ca-certificates gnupg
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io
+usermod -aG docker ubuntu
+
+# Claude Code CLI
+curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+apt-get install -y nodejs
+npm install -g @anthropic-ai/claude-code
+
 # Nullplatform CLI
 curl -fsSL https://cli.nullplatform.com/latest/np-Linux-amd -o /usr/local/bin/np
 chmod +x /usr/local/bin/np
