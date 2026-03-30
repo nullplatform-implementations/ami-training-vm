@@ -1,9 +1,10 @@
-output "public_ip" {
-  value = aws_instance.training.public_ip
-}
-
-output "ssh_command" {
-  value = "ssh ubuntu@${aws_instance.training.public_ip}"
+output "student_connections" {
+  value = {
+    for name, instance in aws_instance.student : name => {
+      public_ip   = instance.public_ip
+      ssh_command = "ssh ubuntu@${instance.public_ip}"
+    }
+  }
 }
 
 output "ami_id" {

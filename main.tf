@@ -39,14 +39,16 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-resource "aws_key_pair" "training" {
-  key_name   = "training-vm-key"
-  public_key = var.ssh_public_key
+resource "aws_key_pair" "student" {
+  for_each = var.students
+
+  key_name   = "training-${each.key}"
+  public_key = each.value.ssh_public_key
 }
 
 resource "aws_security_group" "training" {
   name        = "training-vm-sg"
-  description = "Security group for training VM"
+  description = "Security group for training VMs"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -65,12 +67,14 @@ resource "aws_security_group" "training" {
   }
 }
 
-resource "aws_instance" "training" {
+resource "aws_instance" "student" {
+  for_each = var.students
+
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   subnet_id                   = data.aws_subnets.default.ids[0]
   vpc_security_group_ids      = [aws_security_group.training.id]
-  key_name                    = aws_key_pair.training.key_name
+  key_name                    = aws_key_pair.student[each.key].key_name
   associate_public_ip_address = true
 
   user_data = file("${path.module}/scripts/setup.sh")
@@ -86,6 +90,6 @@ resource "aws_instance" "training" {
   }
 
   tags = {
-    Name = "training-vm"
+    Name = "training-${each.key}"
   }
 }

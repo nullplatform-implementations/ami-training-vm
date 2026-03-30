@@ -8,13 +8,15 @@ variable "instance_type" {
   default = "t3.medium"
 }
 
-variable "ssh_public_key" {
-  type        = string
-  description = "SSH public key for accessing the instance"
+variable "students" {
+  type = map(object({
+    ssh_public_key = string
+  }))
+  description = "Map of student name to their SSH public key"
 }
 
 variable "allowed_ssh_cidrs" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
-  description = "CIDRs allowed to SSH into the instance"
+  description = "CIDRs allowed to SSH into the instances"
 }
