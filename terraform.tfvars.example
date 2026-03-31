@@ -1,0 +1,12 @@
+region            = "us-east-1"
+instance_type     = "t3.medium"
+anthropic_api_key = "sk-ant-..."
+
+students = {
+  agustin = {
+    ssh_public_key = "ssh-ed25519 AAAA... agustin@email.com"
+  }
+  # maria = {
+  #   ssh_public_key = "ssh-ed25519 AAAA... maria@email.com"
+  # }
+}

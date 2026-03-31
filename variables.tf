@@ -15,6 +15,12 @@ variable "students" {
   description = "Map of student name to their SSH public key"
 }
 
+variable "anthropic_api_key" {
+  type        = string
+  sensitive   = true
+  description = "Anthropic API key for Claude Code CLI"
+}
+
 variable "allowed_ssh_cidrs" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
