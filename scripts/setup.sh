@@ -46,7 +46,4 @@ npm install -g @anthropic-ai/claude-code
 curl -fsSL https://cli.nullplatform.com/latest/np-Linux-amd -o /usr/local/bin/np
 chmod +x /usr/local/bin/np
 
-# Environment variables for Claude Code
-echo 'export ANTHROPIC_API_KEY="${anthropic_api_key}"' >> /home/ubuntu/.bashrc
-
 echo "Setup complete" > /var/log/training-setup.log

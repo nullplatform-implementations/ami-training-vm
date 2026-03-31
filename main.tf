@@ -77,9 +77,10 @@ resource "aws_instance" "student" {
   key_name                    = aws_key_pair.student[each.key].key_name
   associate_public_ip_address = true
 
-  user_data = templatefile("${path.module}/scripts/setup.sh", {
-    anthropic_api_key = var.anthropic_api_key
-  })
+  user_data = join("\n", [
+    file("${path.module}/scripts/setup.sh"),
+    "echo 'export ANTHROPIC_API_KEY=${var.anthropic_api_key}' >> /home/ubuntu/.bashrc",
+  ])
 
   root_block_device {
     volume_size = 30
